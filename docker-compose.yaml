@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  frontend:
+    build: ./frontend
+    command: npm start
+    volumes:
+      - ./frontend/:/app
+    ports:
+      - 3000:3000
+    environment:
+     - CHOKIDAR_USEPOLLING=true
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend/:/app
+    ports:
+      - 8000:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - ./backend/.env.dev
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.4-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=frank
+      - POSTGRES_PASSWORD=password_dev
+      - POSTGRES_DB=database_dev
+
+volumes:
+  postgres_data:   
