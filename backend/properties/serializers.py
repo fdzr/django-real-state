@@ -1,6 +1,6 @@
 from django_countries.serializer_fields import CountryField
-from django_countries_serializers import CountryFieldMixin
-from rest_frameworks import serializers
+from django_countries.serializers import CountryFieldMixin
+from rest_framework import serializers
 
 from .models import Property, PropertyViews
 
@@ -19,7 +19,6 @@ class PropertySerializer(serializers.ModelSerializer):
                 "ref_code", 
                 "description", 
                 "country", 
-                "city", 
                 "postal_code", 
                 "street_address", 
                 "property_number", 
@@ -27,16 +26,16 @@ class PropertySerializer(serializers.ModelSerializer):
                 "tax", 
                 "final_property_price", 
                 "plot_area", 
-                "total_floors", 
+                "total_floor", 
                 "bedrooms", 
                 "bathrooms", 
                 "advert_type",
                 "property_type",
                 "cover_photo",
-                "photo1",
-                "photo2",
-                "photo3",
-                "photo4",
+                "photo_1",
+                "photo_2",
+                "photo_3",
+                "photo_4",
                 "published_status",
                 "views"
             ]
@@ -50,10 +49,10 @@ class PropertyCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Property
-        exclude = ["update_at", "pkid"]
+        exclude = ["updated_at", "pkid"]
 
 
 class PropertyViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyViews
-        exclude = ["update_at", "pkid"]
+        exclude = ["updated_at", "pkid"]
