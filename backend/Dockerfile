@@ -22,3 +22,5 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del .build-deps
 
 COPY . /app
+
+RUN chmod +x /app/start.sh
