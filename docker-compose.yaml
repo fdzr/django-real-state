@@ -15,8 +15,10 @@ services:
     build: ./backend
     volumes:
       - ./backend/:/app
-    ports:
-      - 8000:8000
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    # ports:
+    #   - 8000:8000
     command: ./start.sh
     env_file:
       - ./backend/.env.dev
@@ -32,5 +34,20 @@ services:
       - POSTGRES_PASSWORD=password_dev
       - POSTGRES_DB=database_dev
 
+  nginx:
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    build:
+      context: ./backend/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+
 volumes:
-  postgres_data:   
+  postgres_data:
+  static_volume:
+  media_volume:
